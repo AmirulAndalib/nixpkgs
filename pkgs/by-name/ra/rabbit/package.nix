@@ -5,14 +5,14 @@
 
 python3.pkgs.buildPythonApplication rec {
   pname = "rabbit";
-  version = "1.0.1";
+  version = "1.0.5";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "natarajan-chidambaram";
     repo = "RABBIT";
     rev = "refs/tags/${version}";
-    hash = "sha256-E4eUnkKn73MqBFHACdRVFjyUbee+ZJvhP+UYnvHTGdc=";
+    hash = "sha256-ykvI5qW4toNYKAnrk3ADwat1gAUazbDGGKZEZAvKngQ=";
   };
 
   pythonRelaxDeps = true;
@@ -27,17 +27,19 @@ python3.pkgs.buildPythonApplication rec {
     numpy
     pandas
     pip
+    python-dateutil
     requests
     scikit-learn
     scipy
     tqdm
+    urllib3
     xgboost
   ];
 
   pythonImportsCheck = [ "rabbit" ];
 
   meta = {
-    description = "A tool for identifying bot accounts based on their recent GitHub event history";
+    description = "Tool for identifying bot accounts based on their recent GitHub event history";
     homepage = "https://github.com/natarajan-chidambaram/RABBIT";
     license = lib.licenses.asl20;
     mainProgram = "rabbit";

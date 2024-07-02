@@ -1,8 +1,9 @@
-{ pkgs
-, buildPythonPackage
-, django
-, fetchPypi
-, pythonOlder
+{
+  pkgs,
+  buildPythonPackage,
+  django,
+  fetchPypi,
+  pythonOlder,
 }:
 
 buildPythonPackage rec {
@@ -17,9 +18,7 @@ buildPythonPackage rec {
     hash = "sha256-ECtocPJHYR1DsFLeVMVdtlia4UNOJyNMsU1CrX1aVsQ=";
   };
 
-  propagatedBuildInputs = [
-    django
-  ];
+  propagatedBuildInputs = [ django ];
 
   # The tests seem to be impure.
   # They are throwing a error about unset configs:
@@ -34,6 +33,6 @@ buildPythonPackage rec {
     homepage = "https://github.com/makinacorpus/django-leaflet";
     changelog = "https://github.com/makinacorpus/django-leaflet/blob/${version}/CHANGES";
     license = licenses.lgpl3Only;
-    maintainers = with maintainers; [ janik ];
+    maintainers = with maintainers; [ ];
   };
 }

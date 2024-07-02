@@ -33,6 +33,7 @@
 , libuuid
 , systemd
 , wayland
+, libGL
 
 # command line arguments which are always set e.g "--disable-gpu"
 , commandLineArgs ? ""
@@ -93,7 +94,7 @@ stdenv.mkDerivation rec {
         glib nss nspr
       ];
       libGLESv2 = lib.makeLibraryPath [
-        xorg.libX11 xorg.libXext xorg.libxcb wayland
+        xorg.libX11 xorg.libXext xorg.libxcb wayland libGL
       ];
       liboneauth = lib.makeLibraryPath [
         libuuid xorg.libX11
@@ -187,7 +188,7 @@ stdenv.mkDerivation rec {
 
   meta = with lib; {
     homepage = "https://www.microsoft.com/en-us/edge";
-    description = "The web browser from Microsoft";
+    description = "Web browser from Microsoft";
     license = licenses.unfree;
     sourceProvenance = with sourceTypes; [ binaryNativeCode ];
     platforms = [ "x86_64-linux" ];

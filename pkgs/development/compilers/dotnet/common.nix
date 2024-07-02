@@ -38,7 +38,6 @@
       --fish ${./completions/dotnet.fish}
   '';
 
-} // lib.optionalAttrs (type == "sdk") {
   passthru = {
     tests = let
       mkDotnetTest =
@@ -51,9 +50,18 @@
           runtime ? finalAttrs.finalPackage,
           runInputs ? [],
           run ? null,
+          runAllowNetworking ? false,
         }:
         let
-          built = runCommand "dotnet-test-${name}" { buildInputs = [ finalAttrs.finalPackage ]; } (''
+          sdk = finalAttrs.finalPackage;
+          built = runCommand "dotnet-test-${name}" {
+            buildInputs = [ sdk ];
+            # make sure ICU works in a sandbox
+            propagatedSandboxProfile = toString sdk.__propagatedSandboxProfile + ''
+              (allow network-inbound (local ip))
+              (allow mach-lookup (global-name "com.apple.FSEvents"))
+            '';
+          } (''
             HOME=$PWD/.home
             dotnet new nugetconfig
             dotnet nuget disable source nuget
@@ -64,25 +72,38 @@
           '' + build);
         in
           if run == null
-            then build
+            then built
           else
-            runCommand "${built.name}-run" { src = built; nativeBuildInputs = runInputs; } (
-              lib.optionalString (runtime != null) ''
-                # TODO: use runtime here
-                export DOTNET_ROOT=${runtime}
-              '' + run);
+            runCommand "${built.name}-run" ({
+              src = built;
+              nativeBuildInputs = [ built ] ++ runInputs;
+            } // lib.optionalAttrs (stdenv.isDarwin && runAllowNetworking) {
+              sandboxProfile = ''
+                (allow network-inbound (local ip))
+                (allow mach-lookup (global-name "com.apple.FSEvents"))
+              '';
+              __darwinAllowLocalNetworking = true;
+            }) (lib.optionalString (runtime != null) ''
+              # TODO: use runtime here
+              export DOTNET_ROOT=${runtime}
+            '' + run);
 
+      # Setting LANG to something other than 'C' forces the runtime to search
+      # for ICU, which will be required in most user environments.
       checkConsoleOutput = command: ''
-        output="$(${command})"
+        output="$(LANG=C.UTF-8 ${command})"
         # yes, older SDKs omit the comma
         [[ "$output" =~ Hello,?\ World! ]] && touch "$out"
       '';
 
     in {
-      version = testers.testVersion {
+      version = testers.testVersion ({
         package = finalAttrs.finalPackage;
-      };
-
+      } // lib.optionalAttrs (type != "sdk") {
+        command = "dotnet --info";
+      });
+    }
+    // lib.optionalAttrs (type == "sdk") {
       console = mkDotnetTest {
         name = "console";
         template = "console";
@@ -96,6 +117,15 @@
         run = checkConsoleOutput "$src/test";
       };
 
+      self-contained = mkDotnetTest {
+        name = "self-contained";
+        template = "console";
+        usePackageSource = true;
+        build = "dotnet publish --use-current-runtime --sc -o $out";
+        runtime = null;
+        run = checkConsoleOutput "$src/test";
+      };
+
       single-file = mkDotnetTest {
         name = "single-file";
         template = "console";
@@ -106,7 +136,7 @@
       };
 
       web = mkDotnetTest {
-        name = "publish";
+        name = "web";
         template = "web";
         build = "dotnet publish -o $out";
         runInputs = [ expect curl ];
@@ -114,6 +144,7 @@
           expect <<"EOF"
             set status 1
             spawn $env(src)/test
+            proc abort { } { exit 2 }
             expect_before default abort
             expect -re {Now listening on: ([^\r]+)\r} {
               set url $expect_out(1,string)
@@ -125,11 +156,14 @@
               exit 1
             }
             send \x03
+            expect_before timeout abort
+            expect eof
             catch wait result
             exit [lindex $result 3]
           EOF
           touch $out
         '';
+        runAllowNetworking = true;
       };
     } // args.passthru.tests or {};
   } // args.passthru or {};
