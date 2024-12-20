@@ -430,8 +430,8 @@ in {
     nvidia_x11_production  = nvidiaPackages.production;
     nvidia_x11_vulkan_beta = nvidiaPackages.vulkan_beta;
     nvidia_dc              = nvidiaPackages.dc;
-    nvidia_dc_520          = nvidiaPackages.dc_520;
     nvidia_dc_535          = nvidiaPackages.dc_535;
+    nvidia_dc_565          = nvidiaPackages.dc_565;
 
     # this is not a replacement for nvidia_x11*
     # only the opensource kernel driver exposed for hydra to build
@@ -572,6 +572,8 @@ in {
     xone = if lib.versionAtLeast kernel.version "5.4" then callPackage ../os-specific/linux/xone { } else null;
 
     xpadneo = callPackage ../os-specific/linux/xpadneo { };
+
+    yt6801 = callPackage ../os-specific/linux/yt6801 { };
 
     ithc = callPackage ../os-specific/linux/ithc { };
 
