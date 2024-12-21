@@ -2480,6 +2480,8 @@ self: super: with self; {
 
   coapthon3 = callPackage ../development/python-modules/coapthon3 { };
 
+  cobble = callPackage ../development/python-modules/cobble { };
+
   coconut = callPackage ../development/python-modules/coconut { };
 
   cocotb = callPackage ../development/python-modules/cocotb { };
@@ -2547,8 +2549,6 @@ self: super: with self; {
   commoncode = callPackage ../development/python-modules/commoncode { };
 
   commonmark = callPackage ../development/python-modules/commonmark { };
-
-  compiledb = callPackage ../development/python-modules/compiledb { };
 
   complycube = callPackage ../development/python-modules/complycube { };
 
@@ -2847,6 +2847,8 @@ self: super: with self; {
   cybox = callPackage ../development/python-modules/cybox { };
 
   cycler = callPackage ../development/python-modules/cycler { };
+
+  cyclonedds-python = callPackage ../development/python-modules/cyclonedds-python { };
 
   cyclonedx-python-lib = callPackage ../development/python-modules/cyclonedx-python-lib { };
 
@@ -4422,6 +4424,8 @@ self: super: with self; {
 
   falcon = callPackage ../development/python-modules/falcon { };
 
+  falconpy = callPackage ../development/python-modules/falconpy { };
+
   faraday-agent-parameters-types = callPackage ../development/python-modules/faraday-agent-parameters-types { };
 
   faraday-plugins = callPackage ../development/python-modules/faraday-plugins { };
@@ -4617,6 +4621,8 @@ self: super: with self; {
   flake8-import-order = callPackage ../development/python-modules/flake8-import-order { };
 
   flake8-polyfill = callPackage ../development/python-modules/flake8-polyfill { };
+
+  flake8-quotes = callPackage ../development/python-modules/flake8-quotes { };
 
   flaky = callPackage ../development/python-modules/flaky { };
 
@@ -4964,6 +4970,8 @@ self: super: with self; {
   functiontrace = callPackage ../development/python-modules/functiontrace { };
 
   funcy = callPackage ../development/python-modules/funcy { };
+
+  funk = callPackage ../development/python-modules/funk { };
 
   funsor = callPackage ../development/python-modules/funsor { };
 
@@ -5804,6 +5812,8 @@ self: super: with self; {
   heatshrink2 = callPackage ../development/python-modules/heatshrink2 { };
 
   heatzypy = callPackage ../development/python-modules/heatzypy { };
+
+  hebg = callPackage ../development/python-modules/hebg { };
 
   help2man = callPackage ../development/python-modules/help2man { };
 
@@ -7486,6 +7496,8 @@ self: super: with self; {
 
   linuxfd = callPackage ../development/python-modules/linuxfd { };
 
+  linuxpy = callPackage ../development/python-modules/linuxpy { };
+
   lion-pytorch = callPackage ../development/python-modules/lion-pytorch { };
 
   liquidctl = callPackage ../development/python-modules/liquidctl { };
@@ -7803,6 +7815,8 @@ self: super: with self; {
 
   malduck = callPackage ../development/python-modules/malduck { };
 
+  mammoth = callPackage ../development/python-modules/mammoth { };
+
   mamba-ssm = callPackage ../development/python-modules/mamba-ssm { };
 
   managesieve = callPackage ../development/python-modules/managesieve { };
@@ -7862,6 +7876,8 @@ self: super: with self; {
   markdown-macros = callPackage ../development/python-modules/markdown-macros { };
 
   markdownify  = callPackage ../development/python-modules/markdownify { };
+
+  markitdown  = callPackage ../development/python-modules/markitdown { };
 
   marko = callPackage ../development/python-modules/marko { };
 
@@ -8557,6 +8573,8 @@ self: super: with self; {
 
   myfitnesspal = callPackage ../development/python-modules/myfitnesspal { };
 
+  mygene = callPackage ../development/python-modules/mygene { };
+
   mygpoclient = callPackage ../development/python-modules/mygpoclient { };
 
   myhdl = callPackage ../development/python-modules/myhdl {
@@ -9177,6 +9195,8 @@ self: super: with self; {
   nicegui-highcharts = callPackage ../development/python-modules/nicegui-highcharts { };
 
   nidaqmx = callPackage ../development/python-modules/nidaqmx { };
+
+  nifty8 = callPackage ../development/python-modules/nifty8 { };
 
   nikola = callPackage ../development/python-modules/nikola { };
 
@@ -10375,6 +10395,8 @@ self: super: with self; {
 
   pixel-font-builder = callPackage ../development/python-modules/pixel-font-builder { };
 
+  pixel-font-knife = callPackage ../development/python-modules/pixel-font-knife { };
+
   pixel-ring = callPackage ../development/python-modules/pixel-ring { };
 
   pjsua2 = (toPythonModule (pkgs.pjsip.override {
@@ -10403,6 +10425,8 @@ self: super: with self; {
   ppdeep = callPackage ../development/python-modules/ppdeep { };
 
   ppk2-api = callPackage ../development/python-modules/ppk2-api { };
+
+  precisely = callPackage ../development/python-modules/precisely { };
 
   primp = callPackage ../development/python-modules/primp {
     inherit (pkgs.darwin.apple_sdk.frameworks) SystemConfiguration;
@@ -15749,6 +15773,8 @@ self: super: with self; {
 
   templateflow = callPackage ../development/python-modules/templateflow { };
 
+  tempman = callPackage ../development/python-modules/tempman { };
+
   tempora = callPackage ../development/python-modules/tempora { };
 
   tenacity = callPackage ../development/python-modules/tenacity { };
@@ -16188,6 +16214,10 @@ self: super: with self; {
 
   torchWithoutRocm = self.torch.override {
     rocmSupport = false;
+  };
+
+  torchWithVulkan = self.torch.override {
+    vulkanSupport = true;
   };
 
   torch-tb-profiler = callPackage ../development/python-modules/torch-tb-profiler/default.nix { };
@@ -17241,9 +17271,13 @@ self: super: with self; {
 
   types-ipaddress = callPackage ../development/python-modules/types-ipaddress { };
 
+  types-jinja2 = callPackage ../development/python-modules/types-jinja2 { };
+
   types-lxml = callPackage ../development/python-modules/types-lxml { };
 
   types-markdown = callPackage ../development/python-modules/types-markdown { };
+
+  types-markupsafe = callPackage ../development/python-modules/types-markupsafe { };
 
   types-mock = callPackage ../development/python-modules/types-mock { };
 
@@ -17284,6 +17318,8 @@ self: super: with self; {
   types-ujson = callPackage ../development/python-modules/types-ujson { };
 
   types-urllib3 = callPackage ../development/python-modules/types-urllib3 { };
+
+  types-xxhash = callPackage ../development/python-modules/types-xxhash { };
 
   typesentry = callPackage ../development/python-modules/typesentry { };
 
@@ -18335,6 +18371,8 @@ self: super: with self; {
   zenoh = callPackage ../development/python-modules/zenoh { };
 
   zephyr-python-api = callPackage ../development/python-modules/zephyr-python-api { };
+
+  zephyr-test-management = callPackage ../development/python-modules/zephyr-test-management { };
 
   zeroc-ice = callPackage ../development/python-modules/zeroc-ice { };
 
