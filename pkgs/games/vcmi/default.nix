@@ -29,14 +29,14 @@
 
 stdenv.mkDerivation rec {
   pname = "vcmi";
-  version = "1.6.1";
+  version = "1.6.3";
 
   src = fetchFromGitHub {
     owner = "vcmi";
     repo = "vcmi";
     rev = version;
     fetchSubmodules = true;
-    hash = "sha256-+fgtAjjDlR6CeV0kO1sgvZc09gTYHVaisLKnqQlyRFI=";
+    hash = "sha256-nq/2y0bV1UMMQVOpT/iG27Ulvux1aWS55XalMtayOtQ=";
   };
 
   nativeBuildInputs = [

@@ -321,9 +321,12 @@ in
           cp -R ext/fast_mmaped_file_rs $out
         '';
       };
-      hash = if lib.versionAtLeast attrs.version "1.1.1"
-        then "sha256-RsN5XWX7Mj2ORccM0eczY+44WXsbXNTnJVcCMvnOATk="
-        else "sha256-XuQZPbFWqPHlrJvllkvLl1FjKeoAUbi8oKDrS2rY1KM=";
+      hash = if lib.versionAtLeast attrs.version "1.1.2"
+        then "sha256-pNzW2fQZDcuqu8apv3GU7lUC/H1cX5WRifBBQlbE8+s="
+        else
+          if lib.versionAtLeast attrs.version "1.1.1"
+          then "sha256-RsN5XWX7Mj2ORccM0eczY+44WXsbXNTnJVcCMvnOATk="
+          else "sha256-XuQZPbFWqPHlrJvllkvLl1FjKeoAUbi8oKDrS2rY1KM=";
     };
     nativeBuildInputs = [
       cargo
@@ -407,8 +410,10 @@ in
       ++ lib.optional (lib.versionAtLeast attrs.version "1.53.0" && stdenv.hostPlatform.isDarwin && stdenv.hostPlatform.isAarch64) autoSignDarwinBinariesHook;
     buildInputs = [ openssl ];
     hardeningDisable = [ "format" ];
-    env.NIX_CFLAGS_COMPILE = "-Wno-error=incompatible-pointer-types";
-    patches = [
+    env = lib.optionalAttrs (lib.versionOlder attrs.version "1.68.1") {
+      NIX_CFLAGS_COMPILE = "-Wno-error=incompatible-pointer-types";
+    };
+    patches = lib.optionals (lib.versionOlder attrs.version "1.65.0") [
       (fetchpatch {
         name = "gcc-14-fixes.patch";
         url = "https://boringssl.googlesource.com/boringssl/+/c70190368c7040c37c1d655f0690bcde2b109a0d%5E%21/?format=TEXT";
