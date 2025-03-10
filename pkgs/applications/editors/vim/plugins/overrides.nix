@@ -83,6 +83,8 @@
   cmake,
   icu,
   ncurses,
+  # devdocs-nvim dependencies
+  pandoc,
   # Preview-nvim dependencies
   md-tui,
   # sved dependencies
@@ -1010,6 +1012,18 @@ in
       license = lib.licenses.mit;
       maintainers = with lib.maintainers; [ jorsn ];
     };
+  };
+
+  devdocs-nvim = super.devdocs-nvim.overrideAttrs {
+    nvimSkipModule = [
+      # Error initializing Devdocs state
+      "devdocs.state"
+    ];
+    runtimeDeps = [
+      curl
+      jq
+      pandoc
+    ];
   };
 
   diagram-nvim = super.diagram-nvim.overrideAttrs {
@@ -2056,6 +2070,15 @@ in
     nvimSkipModule = "neotest-jest-assertions";
   };
 
+  neotest-mocha = super.neotest-mocha.overrideAttrs {
+    dependencies = with self; [
+      neotest
+      nvim-nio
+      nvim-treesitter
+      plenary-nvim
+    ];
+  };
+
   neotest-minitest = super.neotest-minitest.overrideAttrs {
     dependencies = with self; [
       neotest
@@ -2629,10 +2652,6 @@ in
         zathura = lib.getExe zathura;
       })
     ];
-  };
-
-  orgmode = super.orgmode.overrideAttrs {
-    dependencies = with self; [ (nvim-treesitter.withPlugins (p: [ p.org ])) ];
   };
 
   otter-nvim = super.otter-nvim.overrideAttrs {
@@ -4035,6 +4054,7 @@ in
       "lzextras"
       "lzn-auto-require"
       "middleclass"
+      "mini-test"
       "neorg"
       "neotest"
       "nui-nvim"
