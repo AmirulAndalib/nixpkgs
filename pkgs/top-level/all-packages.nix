@@ -3273,6 +3273,10 @@ with pkgs;
 
   gitqlient = libsForQt5.callPackage ../applications/version-management/gitqlient { };
 
+  globalplatform = callPackage ../by-name/gl/globalplatform/package.nix {
+    inherit (darwin.apple_sdk.frameworks) PCSC;
+  };
+
   glogg = libsForQt5.callPackage ../tools/text/glogg { };
 
   gmrender-resurrect = callPackage ../tools/networking/gmrender-resurrect {
@@ -4405,9 +4409,7 @@ with pkgs;
 
   pipecontrol = libsForQt5.callPackage ../applications/audio/pipecontrol { };
 
-  pulumiPackages = recurseIntoAttrs (
-    callPackage ../tools/admin/pulumi-packages { }
-  );
+  pulumiPackages = recurseIntoAttrs pulumi.pkgs;
 
   pulumi-bin = callPackage ../tools/admin/pulumi-bin { };
 
@@ -5540,6 +5542,7 @@ with pkgs;
   flutterPackages-source = recurseIntoAttrs (callPackage ../development/compilers/flutter { useNixpkgsEngine = true; });
   flutterPackages = flutterPackages-bin;
   flutter = flutterPackages.stable;
+  flutter329 = flutterPackages.v3_29;
   flutter327 = flutterPackages.v3_27;
   flutter326 = flutterPackages.v3_26;
   flutter324 = flutterPackages.v3_24;
@@ -5779,7 +5782,7 @@ with pkgs;
       if stdenv.hostPlatform == stdenv.targetPlatform
          && stdenv.buildPlatform == stdenv.hostPlatform
       then buildPackages.gnat-bootstrap14
-      else buildPackages.gnat13;
+      else buildPackages.gnat14;
     stdenv =
       if stdenv.hostPlatform == stdenv.targetPlatform
          && stdenv.buildPlatform == stdenv.hostPlatform
@@ -7684,7 +7687,7 @@ with pkgs;
 
   gnumake = callPackage ../development/tools/build-managers/gnumake { };
   gradle-packages = import ../development/tools/build-managers/gradle {
-    inherit jdk17 jdk21;
+    inherit jdk11 jdk17 jdk21 jdk23;
   };
   gradleGen = gradle-packages.gen;
   wrapGradle = callPackage gradle-packages.wrapGradle { };
@@ -8042,9 +8045,7 @@ with pkgs;
     stdenv = gccStdenv;
   };
 
-  tarmac = callPackage ../development/tools/tarmac {
-    inherit (darwin.apple_sdk.frameworks) Security;
-  };
+  tarmac = callPackage ../development/tools/tarmac { };
 
   teensyduino = arduino-core.override { withGui = true; withTeensyduino = true; };
 
@@ -10032,7 +10033,7 @@ with pkgs;
     });
 
   libsForQt5 = (recurseIntoAttrs (import ./qt5-packages.nix {
-    inherit lib __splicedPackages makeScopeWithSplicing' generateSplicesForMkScope pkgsHostTarget;
+    inherit lib config __splicedPackages makeScopeWithSplicing' generateSplicesForMkScope pkgsHostTarget;
   })) // { __recurseIntoDerivationForReleaseJobs = true; };
 
   # plasma5Packages maps to the Qt5 packages set that is used to build the plasma5 desktop
@@ -15143,6 +15144,9 @@ with pkgs;
   vscode-utils = callPackage ../applications/editors/vscode/extensions/vscode-utils.nix { };
 
   vscode-extensions = recurseIntoAttrs (callPackage ../applications/editors/vscode/extensions { });
+
+
+  vscode-extensions-update-script = callPackage ../by-name/vs/vscode-extensions-update/vscode-extensions-update-script.nix { };
 
   vscode-js-debug = callPackage ../by-name/vs/vscode-js-debug/package.nix {
     inherit (darwin.apple_sdk.frameworks) AppKit Security;

@@ -214,6 +214,7 @@ in {
   bind = handleTest ./bind.nix {};
   bird = handleTest ./bird.nix {};
   birdwatcher = handleTest ./birdwatcher.nix {};
+  bitbox-bridge = runTest ./bitbox-bridge.nix;
   bitcoind = handleTest ./bitcoind.nix {};
   bittorrent = handleTest ./bittorrent.nix {};
   blockbook-frontend = handleTest ./blockbook-frontend.nix {};
@@ -340,7 +341,7 @@ in {
   documize = handleTest ./documize.nix {};
   documentation = pkgs.callPackage ../modules/misc/documentation/test.nix { inherit nixosLib; };
   doh-proxy-rust = handleTest ./doh-proxy-rust.nix {};
-  dokuwiki = handleTest ./dokuwiki.nix {};
+  dokuwiki = runTest ./dokuwiki.nix;
   dolibarr = handleTest ./dolibarr.nix {};
   domination = handleTest ./domination.nix {};
   dovecot = handleTest ./dovecot.nix {};
@@ -462,6 +463,7 @@ in {
   garage = handleTest ./garage {};
   gatus = runTest ./gatus.nix;
   gemstash = handleTest ./gemstash.nix {};
+  geoclue2 = runTest ./geoclue2.nix;
   geoserver = runTest ./geoserver.nix;
   gerrit = handleTest ./gerrit.nix {};
   geth = handleTest ./geth.nix {};
@@ -1295,7 +1297,7 @@ in {
   vscodium = discoverTests (import ./vscodium.nix);
   vsftpd = handleTest ./vsftpd.nix {};
   waagent = handleTest ./waagent.nix {};
-  wakapi = handleTest ./wakapi.nix {};
+  wakapi = runTest ./wakapi.nix;
   warzone2100 = handleTest ./warzone2100.nix {};
   wasabibackend = handleTest ./wasabibackend.nix {};
   wastebin = handleTest ./wastebin.nix {};

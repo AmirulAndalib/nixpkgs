@@ -10311,6 +10311,10 @@ self: super: with self; {
     callPackage ../development/python-modules/opentelemetry-instrumentation-requests
       { };
 
+  opentelemetry-instrumentation-sqlalchemy =
+    callPackage ../development/python-modules/opentelemetry-instrumentation-sqlalchemy
+      { };
+
   opentelemetry-instrumentation-wsgi =
     callPackage ../development/python-modules/opentelemetry-instrumentation-wsgi
       { };
@@ -17476,6 +17480,8 @@ self: super: with self; {
 
   ttfautohint-py = callPackage ../development/python-modules/ttfautohint-py { };
 
+  ttkbootstrap = callPackage ../development/python-modules/ttkbootstrap { };
+
   ttls = callPackage ../development/python-modules/ttls { };
 
   ttn-client = callPackage ../development/python-modules/ttn-client { };
@@ -18577,6 +18583,8 @@ self: super: with self; {
   wavinsentio = callPackage ../development/python-modules/wavinsentio { };
 
   waybackpy = callPackage ../development/python-modules/waybackpy { };
+
+  waymax = callPackage ../development/python-modules/waymax { };
 
   wazeroutecalculator = callPackage ../development/python-modules/wazeroutecalculator { };
 
