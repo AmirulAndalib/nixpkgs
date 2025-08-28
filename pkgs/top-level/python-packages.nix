@@ -1801,7 +1801,11 @@ self: super: with self; {
 
   bech32 = callPackage ../development/python-modules/bech32 { };
 
-  beetcamp = callPackage ../development/python-modules/beetcamp { };
+  beetcamp = callPackage ../development/python-modules/beetcamp {
+    beets = pkgs.beets.override {
+      python3Packages = self;
+    };
+  };
 
   beewi-smartclim = callPackage ../development/python-modules/beewi-smartclim { };
 
@@ -10797,6 +10801,8 @@ self: super: with self; {
 
   openai-agents = callPackage ../development/python-modules/openai-agents { };
 
+  openai-harmony = callPackage ../development/python-modules/openai-harmony { };
+
   openai-whisper = callPackage ../development/python-modules/openai-whisper { };
 
   openaiauth = callPackage ../development/python-modules/openaiauth { };
@@ -11829,6 +11835,8 @@ self: super: with self; {
 
   plumbum = callPackage ../development/python-modules/plumbum { };
 
+  plumlightpad = callPackage ../development/python-modules/plumlightpad { };
+
   pluthon = callPackage ../development/python-modules/pluthon { };
 
   plux = callPackage ../development/python-modules/plux { };
@@ -12023,6 +12031,8 @@ self: super: with self; {
   procmon-parser = callPackage ../development/python-modules/procmon-parser { };
 
   prodict = callPackage ../development/python-modules/prodict { };
+
+  progettihwsw = callPackage ../development/python-modules/progettihwsw { };
 
   proglog = callPackage ../development/python-modules/proglog { };
 
