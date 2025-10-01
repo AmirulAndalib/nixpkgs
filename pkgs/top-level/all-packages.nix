@@ -7302,7 +7302,6 @@ with pkgs;
   # Multi-arch "drivers" which we want to build for i686.
   driversi686Linux = recurseIntoAttrs {
     inherit (pkgsi686Linux)
-      amdvlk
       intel-media-driver
       intel-vaapi-driver
       mesa
@@ -11608,8 +11607,6 @@ with pkgs;
   };
 
   huggle = libsForQt5.callPackage ../applications/misc/huggle { };
-
-  hushboard = python3.pkgs.callPackage ../applications/audio/hushboard { };
 
   hyperion-ng = libsForQt5.callPackage ../applications/video/hyperion-ng { };
 
