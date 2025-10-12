@@ -6810,6 +6810,8 @@ with pkgs;
 
   premake = premake4;
 
+  pycobertura = with python3Packages; toPythonApplication pycobertura;
+
   pycritty = with python3Packages; toPythonApplication pycritty;
 
   qtcreator = qt6Packages.callPackage ../development/tools/qtcreator {
@@ -6896,8 +6898,6 @@ with pkgs;
   slurm = callPackage ../by-name/sl/slurm/package.nix {
     nvml = cudaPackages.cuda_nvml_dev;
   };
-
-  snowman = qt5.callPackage ../development/tools/analysis/snowman { };
 
   speedtest-cli = with python3Packages; toPythonApplication speedtest-cli;
 
